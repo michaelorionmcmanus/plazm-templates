@@ -12,13 +12,55 @@
   text-transform: uppercase;
 }
 
+// Media queries
+// --------------------------------------------------------
+// Respond to viewport size
+// $size -> viewport size
+// $operator -> 'min' or 'max'
+// $aspect -> 'width' or 'height'
+// --------------------------
+@mixin respond($size, $operator: min, $aspect: width) {
+  @media all and (#{$operator}-#{$aspect}: $size) {
+    @content;
+  }
+}
+
+// Clearfix
+// $mode accepts 'light' or 'heavy'
+// 'light' is sufficient for clearing floats, while 'heavy' is required to prevent margin collapsing
+// --------------------------
+@mixin clearfix($mode: light) {
+  @if $mode == heavy {
+    &:before,
+    &:after {
+      content: " ";
+      display: table;
+    }
+    &:after {
+      clear: both;
+    }
+  }
+  @else {
+    &:after {
+      content: " ";
+      display: block;
+      clear: both;
+    }
+  }
+}
+
 /* =============================================================================
    BASE
    ========================================================================== */
 
-html, body, p { font-family: $garamond-stack;}
+html,
+body,
+p {
+  font-family: $garamond-stack;
+}
 
 body {
+  min-width: 320px;
   background-color: $background;
 }
 
@@ -39,8 +81,12 @@ a {
 
 /** CONTAINER **/
 #container {
-  // width: 100%;
   padding: 10px;
+  // @include respond($ontario) {
+  //   padding: 15px;
+  //   width: 985px;
+  //   margin: 0 auto;    
+  // }
 }
 
 .float-right {
@@ -123,19 +169,33 @@ ul {
 }
 
 /** HEADER **/
-header #logo, header nav {
-  margin-bottom: 10px;
-  display: block;
-}
-
-header nav { margin-bottom: 0;}
-
 header {
   display: block;
-}
-
-header nav {
-  width: 100%;
+  #logo,
+  nav {
+    display: block;
+    margin-bottom: 10px;    
+  }
+  nav {
+    width: 100%;
+    margin-bottom: 0;
+  }
+  // @include respond($ladoga) {
+  //   #logo,
+  //   nav {
+  //     margin: 0;
+  //     float: left;      
+  //   }
+  // }
+  // @include respond($ontario) {
+  //   #logo {
+  //     font-size: 28px;
+  //     margin-top: 36px;      
+  //   }
+  //   ul {
+  //     font-size: 16px;
+  //   }
+  // }
 }
 
 .two-col {
@@ -148,16 +208,72 @@ header nav {
   .col-right {
 
   }
+  // @include respond($ontario) {
+  //   margin-top: 15px;
+  //   &.article-header {
+  //     margin-top: 0;
+  //   }
+  //   .col {
+  //     width: auto;
+  //     float: left;
+  //   }
+  //   .col-left {
+  //     width: 72.25%
+  //   }
+  //   .col-right {
+  //     width: 25.75%;
+  //     float: right;
+  //     margin-left: 1.5%;
+  //     .block {
+  //       margin: 15px 0;
+  //     }
+  //   }
+  // }
 }
 
-nav#auxiliary form {
-  float: left;
+.two-col.half {
+  // @include respond($ontario) {
+  //   .col {
+  //     width: auto;
+  //     float: left;
+  //   }
+  //   .col-left {
+  //     width: 49%
+  //   }
+  //   .col-right {
+  //     width: 49%;
+  //     float: right;
+  //     margin-left: 1%;
+  //   }
+  // }
+}
+
+#auxiliary {
+  form,
+  .tx-solr {
+    float: right;
+  }
+  // @include respond($ladoga) {
+  //   display: inline-block;
+  //   // width: 100%;
+  //   ul {
+  //     float: right;
+  //   }
+  //   form,
+  //   .tx-solr {
+  //     margin: 0;
+  //   }
+  // }
 }
 
 /** SEARCH **/
 #container #tx-solr-search-functions,
 #container #tx-solr-search {
   width: 100%;
+}
+
+#container #tx-solr-search {
+  float: none;
 }
 
 #container #tx-solr-search-functions {
@@ -236,14 +352,17 @@ form.search {
 }
 
 .archive-teaser {
+  width: 100%;
+  // max-width: 336px;
+  max-width: 348px;
+  // height: 200px;
   position: relative;
-  /*max-width: 336px;*/
   margin-bottom: 25px;
-  width: 348px;
-  height: 200px;
   img {
-    /*max-width: 336px;*/
     display: block;
+    width: 100%;
+    // max-width: 336px;
+    height: auto;
   }
   h3 {
     visibility: hidden;
@@ -253,11 +372,12 @@ form.search {
     top: 0;
     margin: 0;
     a {
+      box-sizing: border-box;
+      display: block;
+      width: 100%;
+      height: 100%;
       text-decoration: none !important;
       padding: 30px 16px;
-      display: block;
-      width: 316px;
-      height: 140px;
     }
   }
   /** Teaser without image **/
@@ -272,6 +392,17 @@ form.search {
       }
     }
   }
+  // @include respond($ontario) {
+  //   .archive-teaser.expanded {
+  //     h3 {
+  //       padding-top: 0;
+  //     }
+  //     .info {
+  //       float: right;
+  //       width: 45%;
+  //     }
+  //   }
+  // }
 }
 
 .callout {
@@ -369,7 +500,20 @@ nav.articles {
   .no-previous {
     margin-left: 5px;
   }
-
+  // @include respond($ontario) {
+  //   margin-bottom: 35px;
+  //   margin-top: 15px;
+  //   .control {
+  //     font-family: $letter-gothic-stack;
+  //     font-size: 5em;
+  //   }
+  //   .close {
+  //     float:left;
+  //   }
+  //   .left,.right {
+  //     float: left;
+  //   }
+  // }
 }
 
 ul.social {
@@ -444,6 +588,11 @@ h3 {
     &:hover {
       background: white;
     }
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
   }
 }
 
@@ -512,6 +661,11 @@ nav#primary {
       }
     }
   }
+  // @include respond($ladoga) {
+  //   ul {
+  //     float: right;
+  //   }
+  // }
 }
 
 a:visited,
@@ -586,7 +740,7 @@ form.search {
   color: #333;
   font-size: 14px;
   #tx-solr-search & {
-    width: 620px;
+    width: 100%;
   }
 }
 
@@ -609,6 +763,7 @@ form.search {
 hr.mast-divider {
   margin-top: .5em;
 }
+
 .two-col {
   .col-right {
     .block{
@@ -650,6 +805,7 @@ hr.mast-divider {
       }
     }
   }
+  // TODO fix this typo, test
   .cole-left &, .col-left & p, & p {
     font-size: 1.1em;
     font-family: $letter-gothic-stack;
@@ -659,16 +815,22 @@ hr.mast-divider {
     display: inline-block;
   }
   &.red-border {
-    border-left: solid red 25px;
-    position: relative;
-    left: -25px;
+    border-left: solid red 10px;
     margin-bottom: 35px;
+    margin-left: -10px;
   }
   .col-right &.red-border {
+    box-sizing: border-box;
     border-left: solid red 30px;
-    position: static;
     padding-left: 10px;
+    margin-left: 0;
   }
+  // @include respond($ontario) {
+  //   &.red-border {
+  //     border-left: solid red 25px;
+  //     margin-left: -25px;
+  //   }
+  // }
 }
 
 div.csc-textpic div.csc-textpic-imagewrap .csc-textpic-image .csc-textpic-caption {
@@ -678,4 +840,15 @@ div.csc-textpic div.csc-textpic-imagewrap .csc-textpic-image .csc-textpic-captio
 div.csc-textpic.csc-textpic-intext-left-nowrap .csc-textpic-image,
 div.csc-textpic.csc-textpic-intext-left .csc-textpic-imagewrap .csc-textpic-image {
   margin-top: 2.5em;
+}
+
+
+// TODO these styles are temporary
+div.csc-textpic-intext-right-nowrap div.csc-textpic-imagewrap {
+  float: right;
+  clear: both;
+}
+
+div.csc-default {
+  @include clearfix;
 }
