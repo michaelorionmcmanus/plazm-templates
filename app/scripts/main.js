@@ -25,4 +25,11 @@ require(['app', 'jquery', 'colorbox'], function (app) {
         });
         $('a.originalImages:first').click();
     });
+
+    $('[data-behavior=open-nav]').click(function() {
+        $('body').addClass('nav-open');
+    });
+    $('[data-behavior=close-nav]').click(function() {
+        $('body').removeClass('nav-open');
+    });
 });

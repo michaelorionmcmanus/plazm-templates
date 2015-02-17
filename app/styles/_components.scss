@@ -25,6 +25,34 @@
   }
 }
 
+// Tripundra
+// ------
+// ------
+// ------
+// --------------------------
+@mixin tripundra($color, $weight, $width, $height) {
+  // Reset default <button> styles
+  background: transparent;
+  border: none;
+  padding: 0;
+  // Apply the sacred ash
+  display: block;
+  width: $width;
+  height: $height;
+  border-top: $weight solid $color;
+  border-bottom: $weight solid $color;
+  position: relative;
+  &:before {
+    content: "";
+    display: block;
+    width: 100%;
+    border-top: $weight solid $color;
+    position: absolute;
+    top: (($height - ($weight * 2)) / 2 ) - ($weight / 2);
+    left: 0;
+  }
+}
+
 // Clearfix
 // $mode accepts 'light' or 'heavy'
 // 'light' is sufficient for clearing floats, while 'heavy' is required to prevent margin collapsing
@@ -62,6 +90,12 @@ p {
 body {
   min-width: 320px;
   background-color: $background;
+  &.nav-open {
+      position: fixed;
+      left: 0;
+      right: 0;
+      overflow: hidden;
+  }
 }
 
 #logo,
@@ -82,6 +116,11 @@ a {
 /** CONTAINER **/
 #container {
   padding: 10px;
+  box-shadow: $navWidth 0 0 0 transparentize($brown, 0.1);
+  transition: $duration transform ease;
+  .nav-open & {
+    transform: translateX(-$navWidth) translateZ(0);
+  }
   // @include respond($ontario) {
   //   padding: 15px;
   //   width: 985px;
@@ -129,49 +168,9 @@ ul.vertical {
   }
 }
 
-ul {
-  &.horizontal {
-    li {
-      nav#primary &:hover {
-        background: #3C2415;
-        background: rgba(60,36,21,.90);
-        a {
-          color: white;
-        }
-        .dropdown {
-          display: block;
-        }
-      }
-      .dropdown {
-        display: none;
-        padding: 25px;
-        a {
-          color: white;
-        }
-        position: absolute;
-        left: 0;
-        top: 36px;
-        background: #3C2415;
-        background: rgba(60,36,21,.90);
-        ul {
-          list-style-type: none;
-          width: 200px;
-          li {
-            width: 100%;
-          }
-        }
-        .group {
-          float: left;
-        }
-      }
-    }
-  }
-}
-
 /** HEADER **/
 header {
   display: block;
-  #logo,
   nav {
     display: block;
     margin-bottom: 10px;    
@@ -188,10 +187,6 @@ header {
   //   }
   // }
   // @include respond($ontario) {
-  //   #logo {
-  //     font-size: 28px;
-  //     margin-top: 36px;      
-  //   }
   //   ul {
   //     font-size: 16px;
   //   }
@@ -452,7 +447,7 @@ form.search {
     padding: 10px 0;
     /*display: inline-block;*/
     a {
-      color: #333;
+      color: $grayDark;
       padding: 0;
     }
   }
@@ -598,7 +593,14 @@ h3 {
 
 /** identity **/
 #logo {
+  font-size: 18px;
   font-weight: normal;
+  float: left;
+  @include respond($ontario) {
+    font-size: 28px;
+    margin-top: 36px;
+    margin-bottom: 10px;
+  }
 }
 
 /** navs **/
@@ -620,58 +622,137 @@ nav#footer {
 }
 
 nav#primary {
-  > ul > li {
-    line-height: 16px;
-    height: 16px;
-    &:hover {
-      cursor: pointer;
-      > a:hover {
-        text-decoration: none;
-      }
-    }
-    padding: 10px;
+  $space: 10px;
+  @include clearfix;
+  padding: 3px 0 12px;
+  ul,
+  .dropdown {
+    padding-right: $space;
+    padding-left: $space;
   }
-  li {
-    margin-right: 0px;
-
-    &.last {
-      margin-right: 0;
+  > ul {
+    box-sizing: border-box;
+    height: 100vh;
+    width: $navWidth;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+    position: fixed;
+    top: 0;
+    left: 100%;
+    > li + li {
+      padding-top: $space;
+    }    
+    a {
+      color: #fff;
     }
   }
   .dropdown {
-    font-size: 14px;
-    ul {
-      display: inline-block;
-      margin-top: 15px;
-      font-size: 14px;
-      li {
-        &:hover {
-          background: none;
-        }
-        a {
-          &:hover {
-            background: none;
-          }
-        }
-      }
-    }
-    a {
-      &.header {
-        text-decoration: underline;
-      }
+    display: block;
+    padding-top: ($space / 2);
+    li {
+      padding-top: ($space / 2);
     }
   }
+
   // @include respond($ladoga) {
   //   ul {
   //     float: right;
   //   }
   // }
+
+  // TODO temporary breakpoint; adjust
+  @include respond($ladoga) {
+    > ul > li {
+      height: 16px;
+      line-height: 16px;
+      padding: $space;
+      &:hover {
+        cursor: pointer;
+        > a:hover {
+          text-decoration: none;
+        }
+      }
+    }
+    li {
+      &:hover {
+        background: #3C2415;
+        background: rgba(60,36,21,.90);
+        a {
+          color: white;
+        }
+        .dropdown {
+          display: block;
+        }
+      }
+      .dropdown {
+        display: none;
+        font-size: 14px;
+        padding: 25px;
+        a {
+          color: white;
+        }
+        position: absolute;
+        left: 0;
+        top: 36px;
+        background: #3C2415;
+        background: rgba(60,36,21,.90);
+        ul {
+          display: inline-block;
+          width: 200px;
+          font-size: 14px;
+          list-style-type: none;
+          margin-top: 15px;
+          li {
+            width: 100%;
+            &:hover {
+              background: none;
+            }
+            a {
+              &:hover {
+                background: none;
+              }
+            }
+          }
+          a {
+            &.header {
+              text-decoration: underline;
+            }
+          }
+        }
+        .group {
+          float: left;
+        }
+      }
+    }
+  }
+}
+
+// button
+.toggler {
+  @include tripundra($grayDark, 2px, 20px, 16px);
+  margin-top: 2px;
+  float: right;
+}
+
+.nav-overlay {
+  display: none;
+  cursor: pointer;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  .nav-open & {
+    display: block;
+  }
 }
 
 a:visited,
 a:active,
 a {
-  color: #333;
+  color: $grayDark;
 }
 
 a:hover {
@@ -737,7 +818,7 @@ form.search {
   width: 115px;
   font-family: $letter-gothic-stack;
   text-transform: uppercase;
-  color: #333;
+  color: $grayDark;
   font-size: 14px;
   #tx-solr-search & {
     width: 100%;
@@ -761,7 +842,7 @@ form.search {
 }
 
 hr.mast-divider {
-  margin-top: .5em;
+  margin: 0 0 20px;
 }
 
 .two-col {

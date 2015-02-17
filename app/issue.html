@@ -21,13 +21,31 @@
 <body>
 
 <div id="container">
-<header class="clearfix">
-  <nav id="primary" class="clearfix">
-    <a id="logo" href="/">PLAZM.ORG</a>
-    <ul class="plain horizontal"><li><a href="">Contents</a><div class="dropdown"><div class="group"><a class="header" href="">Publications</a><ul class="plain vertical"><li><a href="publications/plazm-online/">Plazm Online</a></li><li><a href="publications/plazm-magazine/">Plazm Magazine</a></li></ul></div></div></li><li><a href="about/">About</a></li><li><a href="blog/">Blog</a></li><li><a href="join-our-cult/">Join Our Cult</a></li></ul>
-  </nav>
-  <hr class="clearfix mast-divider">
-</header>
+  
+  <header>
+    <nav id="primary">
+      <a id="logo" href="/">PLAZM.ORG</a>
+      <button class="toggler" data-behavior="open-nav"></button>
+      <ul>
+        <li><a href="">Contents</a>
+          <div class="dropdown">
+            <div class="group">
+              <a class="header" href="">Publications</a>
+              <ul>
+                <li><a href="publications/plazm-online/">Plazm Online</a></li>
+                <li><a href="publications/plazm-magazine/">Plazm Magazine</a></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <li><a href="about/">About</a></li>
+        <li><a href="blog/">Blog</a></li>
+        <li><a href="join-our-cult/">Join Our Cult</a></li>
+      </ul>
+    </nav>
+    <hr class="mast-divider">
+  </header>
+
 <div id="main" role="main">
 
 <div class="two-col clearfix">
@@ -283,6 +301,7 @@
 </div>
 
 </div>
+  <div class="nav-overlay" data-behavior="close-nav"></div>
 </div>
 
 <!--[if lt IE 7]>
