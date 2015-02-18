@@ -115,17 +115,21 @@ a {
 
 /** CONTAINER **/
 #container {
+  max-width: $containerWidth;
   padding: 10px;
   box-shadow: $navWidth 0 0 0 transparentize($brown, 0.1);
   transition: $duration transform ease;
   .nav-open & {
     transform: translateX(-$navWidth) translateZ(0);
   }
-  // @include respond($ontario) {
-  //   padding: 15px;
-  //   width: 985px;
-  //   margin: 0 auto;    
-  // }
+  // TODO adjust this to same breakpoint as nav pattern
+  @include respond($ladoga) {
+    box-shadow: none;
+  }
+  @include respond($ontario) {
+    padding: 15px;
+    margin: 0 auto;    
+  }
 }
 
 .float-right {
@@ -197,11 +201,17 @@ header {
   .col {
     width: 100%;
   }
-  .col-left {
-
-  }
-  .col-right {
-
+  @include respond($ontario) {
+    display: flex;
+    justify-content: space-between;
+    // TODO flexbox fallback
+    .col-left {
+      min-width: 72.284%;
+    }
+    .col-right {
+      box-sizing: border-box;
+      padding-left: 20px;
+    } 
   }
   // @include respond($ontario) {
   //   margin-top: 15px;
@@ -226,27 +236,56 @@ header {
   // }
 }
 
+.col-left {
+  .content {
+    a {
+      text-decoration: underline;
+      &:hover {
+        background: white;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+      }
+    }
+  }
+}
+
+.col-right {
+
+}
+
 .two-col.half {
-  // @include respond($ontario) {
-  //   .col {
-  //     width: auto;
-  //     float: left;
-  //   }
-  //   .col-left {
-  //     width: 49%
-  //   }
-  //   .col-right {
-  //     width: 49%;
-  //     float: right;
-  //     margin-left: 1%;
-  //   }
-  // }
+  $space: 15px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  // TODO flexbox fallback
+  @include respond($ladoga) {
+    .col {
+      width: calc(50% - (#{$space} / 2));
+      min-width: 0;
+    }
+    .col-left {
+      margin-right: $space;
+    }
+    .col-right {
+      padding-left: 0;
+    }
+  }
 }
 
 #auxiliary {
   form,
   .tx-solr {
     float: right;
+  }
+  @include respond($ontario) {
+    form,
+    .tx-solr {
+      float: none;
+    }
   }
   // @include respond($ladoga) {
   //   display: inline-block;
@@ -289,13 +328,6 @@ header {
 /* =============================================================================
    MODULE
    ========================================================================== */
-
-form.search {
-  input[type='submit'] {
-    margin-left: 3px;
-  }
-}
-
 .callout {
   .col-right & {
     margin-bottom: 15px;
@@ -348,15 +380,12 @@ form.search {
 
 .archive-teaser {
   width: 100%;
-  // max-width: 336px;
   max-width: 348px;
-  // height: 200px;
   position: relative;
-  margin-bottom: 25px;
+  margin: 0 auto 25px;
   img {
     display: block;
     width: 100%;
-    // max-width: 336px;
     height: auto;
   }
   h3 {
@@ -386,6 +415,9 @@ form.search {
         color: black;
       }
     }
+  }
+  @include respond($ladoga) {
+    max-width: none;
   }
   // @include respond($ontario) {
   //   .archive-teaser.expanded {
@@ -573,20 +605,6 @@ h3 {
     background: white;
     p {
       display: inline;
-    }
-  }
-}
-
-.col-left .content{
-  a {
-    text-decoration: underline;
-    &:hover {
-      background: white;
-    }
-    img {
-      display: block;
-      width: 100%;
-      height: auto;
     }
   }
 }
@@ -789,39 +807,50 @@ a.more:hover {
   text-decoration: underline;
 }
 
-.search input[type='submit'] {
-  border: none;
-  width: 77px;
-  height: 15px;
-  background-image: url(/images/search-submit.gif);
-  background-repeat: no-repeat;
-  background-color: #fff;
-  margin-bottom: -3px;
-  background-position: -1px -3px;
-}
-
 form.search {
   background: white;
-  padding: 2px 0 0 0;
+  input[type='text'] {
+    padding: 2px 0 2px 4px;
+    background: none;
+    border: none;
+    width: 115px;
+    font-family: $letter-gothic-stack;
+    text-transform: uppercase;
+    color: $grayDark;
+    font-size: 14px;
+    #tx-solr-search & {
+      width: 100%;
+    }
+  }
+  input[type='submit'] {
+    border: none;
+    width: 77px;
+    height: 15px;
+    background-image: url(/images/search-submit.gif);
+    background-repeat: no-repeat;
+    background-color: #fff;
+    margin-left: 3px;
+    background-position: -1px -2px;
+  }
+  @include respond($ontario) {
+    input {
+      box-sizing: border-box;
+    }
+    input[type='text'] {
+      width: 60%;
+      padding-right: 3px;
+    }
+    input[type='submit'] {
+      width: 40%;
+      background-position: right -2px;
+      margin-left: 0;
+    }
+  }
 }
 
 #resultsPerPage {
   label {
     margin-right: 10px;
-  }
-}
-
-.search input[type='text'] {
-  padding: 4px 0 0px 2px;
-  background: none;
-  border: none;
-  width: 115px;
-  font-family: $letter-gothic-stack;
-  text-transform: uppercase;
-  color: $grayDark;
-  font-size: 14px;
-  #tx-solr-search & {
-    width: 100%;
   }
 }
 
