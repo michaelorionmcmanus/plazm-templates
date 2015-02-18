@@ -122,11 +122,13 @@ a {
   .nav-open & {
     transform: translateX(-$navWidth) translateZ(0);
   }
-  // TODO adjust this to same breakpoint as nav pattern
   @include respond($ladoga) {
     box-shadow: none;
     padding: 15px;
-    margin: 0 auto;    
+    margin: 0 auto;
+    .nav-open & {
+      transform: translateX(0);
+    }
   }
 }
 
@@ -148,7 +150,6 @@ ul.horizontal li {
   display: block;
   float: left;
   margin-right: 15px;
-  // position: relative;
   &.last {
     margin-right: 0;
   }
@@ -180,18 +181,6 @@ header {
     width: 100%;
     margin-bottom: 0;
   }
-  // @include respond($ladoga) {
-  //   #logo,
-  //   nav {
-  //     margin: 0;
-  //     float: left;      
-  //   }
-  // }
-  // @include respond($ontario) {
-  //   ul {
-  //     font-size: 16px;
-  //   }
-  // }
 }
 
 .two-col {
@@ -199,38 +188,30 @@ header {
     width: 100%;
   }
   @include respond($ontario) {
-    display: flex;
-    justify-content: space-between;
-    // TODO flexbox fallback
+    @include clearfix;
+    .col {
+      float: left;
+    }
     .col-left {
-      min-width: 72.284%;
+      width: 72.284%;
     }
     .col-right {
+      width: 27.716%;
       box-sizing: border-box;
       padding-left: 20px;
-    } 
+    }
   }
-  // @include respond($ontario) {
-  //   margin-top: 15px;
-  //   &.article-header {
-  //     margin-top: 0;
-  //   }
-  //   .col {
-  //     width: auto;
-  //     float: left;
-  //   }
-  //   .col-left {
-  //     width: 72.25%
-  //   }
-  //   .col-right {
-  //     width: 25.75%;
-  //     float: right;
-  //     margin-left: 1.5%;
-  //     .block {
-  //       margin: 15px 0;
-  //     }
-  //   }
-  // }
+  @include respond($ontario) {
+    margin-top: 15px;
+    &.article-header {
+      margin-top: 0;
+    }
+    .col-right {
+      .block {
+        margin: 15px 0;
+      }
+    }
+  }
 }
 
 .col-left {
@@ -252,18 +233,20 @@ header {
 
 .two-col.half {
   $space: 15px;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  // TODO flexbox fallback
   @include respond($ladoga) {
-    justify-content: flex-start;
+    @include clearfix;
     .col {
       width: calc(50% - (#{$space} / 2));
-      min-width: 0;
+      float: left;
+      .no-csscalc & {
+        width: 49%;
+      }
     }
     .col-left {
       margin-right: $space;
+      .no-csscalc & {
+        margin-right: 1%;
+      }
     }
     .col-right {
       padding-left: 0;
@@ -288,17 +271,6 @@ header {
       float: none;
     }
   }
-  // @include respond($ladoga) {
-  //   display: inline-block;
-  //   // width: 100%;
-  //   ul {
-  //     float: right;
-  //   }
-  //   form,
-  //   .tx-solr {
-  //     margin: 0;
-  //   }
-  // }
 }
 
 /** SEARCH **/
@@ -420,17 +392,14 @@ header {
   @include respond($ladoga) {
     max-width: none;
   }
-  // @include respond($ontario) {
-  //   .archive-teaser.expanded {
-  //     h3 {
-  //       padding-top: 0;
-  //     }
-  //     .info {
-  //       float: right;
-  //       width: 45%;
-  //     }
-  //   }
-  // }
+  @include respond($ontario) {
+    .archive-teaser.expanded {
+      .info {
+        float: right;
+        width: 45%;
+      }
+    }
+  }
 }
 
 .callout {
@@ -528,20 +497,20 @@ nav.articles {
   .no-previous {
     margin-left: 5px;
   }
-  // @include respond($ontario) {
-  //   margin-bottom: 35px;
-  //   margin-top: 15px;
-  //   .control {
-  //     font-family: $letter-gothic-stack;
-  //     font-size: 5em;
-  //   }
-  //   .close {
-  //     float:left;
-  //   }
-  //   .left,.right {
-  //     float: left;
-  //   }
-  // }
+  @include respond($ontario) {
+    margin-bottom: 35px;
+    margin-top: 15px;
+    .control {
+      font-family: $letter-gothic-stack;
+      font-size: 5em;
+    }
+    .close {
+      float:left;
+    }
+    .left,.right {
+      float: left;
+    }
+  }
 }
 
 ul.social {
@@ -923,7 +892,7 @@ hr.mast-divider {
   }
   .header {
     font-weight: normal;
-    font-size: 26px;
+    font-size: 20px;
     text-transform: uppercase;
     font-family: $letter-gothic-stack;
     color: red;
@@ -940,9 +909,8 @@ hr.mast-divider {
       }
     }
   }
-  // TODO fix this typo, test
-  .cole-left &, .col-left & p, & p {
-    font-size: 1.1em;
+  .col-left &, .col-left & p, & p {
+    font-size: 1em;
     font-family: $letter-gothic-stack;
   }
   &.white {
@@ -960,12 +928,18 @@ hr.mast-divider {
     padding-left: 10px;
     margin-left: 0;
   }
-  // @include respond($ontario) {
-  //   &.red-border {
-  //     border-left: solid red 25px;
-  //     margin-left: -25px;
-  //   }
-  // }
+  @include respond($ladoga) {
+    &.red-border {
+      border-left: solid red 25px;
+      margin-left: -25px;
+    }
+    .header {
+      font-size: 26px;
+    }
+    .col-left &, .col-left & p, & p {
+      font-size: 1.1em;
+    }
+  }
 }
 
 div.csc-textpic div.csc-textpic-imagewrap .csc-textpic-image .csc-textpic-caption {
