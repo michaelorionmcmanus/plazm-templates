@@ -57,7 +57,7 @@
 // $mode accepts 'light' or 'heavy'
 // 'light' is sufficient for clearing floats, while 'heavy' is required to prevent margin collapsing
 // --------------------------
-@mixin clearfix($mode: light) {
+@mixin clearfix($mode: heavy) {
   @if $mode == heavy {
     &:before,
     &:after {
@@ -125,8 +125,6 @@ a {
   // TODO adjust this to same breakpoint as nav pattern
   @include respond($ladoga) {
     box-shadow: none;
-  }
-  @include respond($ontario) {
     padding: 15px;
     margin: 0 auto;    
   }
@@ -150,8 +148,7 @@ ul.horizontal li {
   display: block;
   float: left;
   margin-right: 15px;
-  position: relative;
-  z-index: 100;
+  // position: relative;
   &.last {
     margin-right: 0;
   }
@@ -245,15 +242,12 @@ header {
       }
       img {
         display: block;
+        width: auto;
         max-width: 100%;
         height: auto;
       }
     }
   }
-}
-
-.col-right {
-
 }
 
 .two-col.half {
@@ -263,6 +257,7 @@ header {
   flex-wrap: wrap;
   // TODO flexbox fallback
   @include respond($ladoga) {
+    justify-content: flex-start;
     .col {
       width: calc(50% - (#{$space} / 2));
       min-width: 0;
@@ -277,11 +272,17 @@ header {
 }
 
 #auxiliary {
+  padding-top: 20px;
+  border-top: 1px solid $grayDark;
+  margin-top: 20px;
   form,
   .tx-solr {
     float: right;
   }
   @include respond($ontario) {
+    padding-top: 0;
+    border-top: none;
+    margin-top: 0;
     form,
     .tx-solr {
       float: none;
@@ -614,10 +615,10 @@ h3 {
   font-size: 18px;
   font-weight: normal;
   float: left;
-  @include respond($ontario) {
+  @include respond($ladoga) {
     font-size: 28px;
     margin-top: 36px;
-    margin-bottom: 10px;
+    float: left;
   }
 }
 
@@ -650,8 +651,8 @@ nav#primary {
   }
   > ul {
     box-sizing: border-box;
-    height: 100vh;
     width: $navWidth;
+    height: 100vh;
     padding-top: 16px;
     padding-bottom: 16px;
     overflow: scroll;
@@ -673,24 +674,39 @@ nav#primary {
       padding-top: ($space / 2);
     }
   }
-
-  // @include respond($ladoga) {
-  //   ul {
-  //     float: right;
-  //   }
-  // }
-
-  // TODO temporary breakpoint; adjust
   @include respond($ladoga) {
-    > ul > li {
-      height: 16px;
-      line-height: 16px;
-      padding: $space;
-      &:hover {
-        cursor: pointer;
-        > a:hover {
-          text-decoration: none;
+    padding: 0;
+    ul,
+    .dropdown {
+      padding-right: 0;
+      padding-left: 0;
+    }
+    > ul {
+      width: auto;
+      height: auto;
+      font-size: 16px;
+      padding: 34px 0 0;
+      float: right;
+      overflow: visible;
+      position: static;
+      > li {
+        height: 16px;
+        line-height: 16px;
+        padding: $space;
+        float: left;
+        position: relative;
+        &:hover {
+          cursor: pointer;
+          > a:hover {
+            text-decoration: none;
+          }
         }
+      }
+      > li + li {
+        padding-top: $space;
+      }    
+      a {
+        color: $grayDark;
       }
     }
     li {
@@ -708,14 +724,17 @@ nav#primary {
         display: none;
         font-size: 14px;
         padding: 25px;
-        a {
-          color: white;
-        }
         position: absolute;
         left: 0;
         top: 36px;
         background: #3C2415;
         background: rgba(60,36,21,.90);
+        a {
+          color: white;
+        }
+        .header {
+          text-decoration: underline;
+        }
         ul {
           display: inline-block;
           width: 200px;
@@ -752,6 +771,9 @@ nav#primary {
   @include tripundra($grayDark, 2px, 20px, 16px);
   margin-top: 2px;
   float: right;
+  @include respond($ladoga) {
+    display: none;
+  }
 }
 
 .nav-overlay {
@@ -872,6 +894,9 @@ form.search {
 
 hr.mast-divider {
   margin: 0 0 20px;
+  @include respond($ladoga) {
+    margin: 1em 0;
+  }
 }
 
 .two-col {
