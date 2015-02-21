@@ -124,8 +124,11 @@ a {
   max-width: $contentWidth;
   padding: 10px;
   box-shadow: $navWidth 0 0 0 transparentize($brown, 0.1);
+  transition: $duration -webkit-transform ease;
   transition: $duration transform ease;
   .nav-open & {
+    -webkit-transform: translateX(-$navWidth) translateZ(0);
+    -ms-transform: translateX(-$navWidth) translateZ(0);
     transform: translateX(-$navWidth) translateZ(0);
   }
   @include respond($ladoga) {
@@ -988,8 +991,6 @@ div.csc-textpic.csc-textpic-intext-left .csc-textpic-imagewrap .csc-textpic-imag
   margin-top: 2.5em;
 }
 
-
-// TODO these styles are temporary
 div.csc-textpic-intext-right-nowrap div.csc-textpic-imagewrap {
   float: right;
   clear: both;
