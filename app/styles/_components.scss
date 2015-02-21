@@ -16,12 +16,18 @@
 // --------------------------------------------------------
 // Respond to viewport size
 // $size -> viewport size
+// $fallback -> 'true' or 'false'
 // $operator -> 'min' or 'max'
 // $aspect -> 'width' or 'height'
 // --------------------------
-@mixin respond($size, $operator: min, $aspect: width) {
+@mixin respond($size, $fallback: true, $operator: min, $aspect: width) {
   @media all and (#{$operator}-#{$aspect}: $size) {
     @content;
+  }
+  @if $fallback == true {
+    .no-mediaqueries & {
+      @content;
+    }
   }
 }
 
@@ -189,9 +195,6 @@ header {
 .two-col {
   .col {
     width: 100%;
-  }
-  @include respond($ontario) {
-    
   }
   @include respond($erie) {
     @include clearfix;
