@@ -243,18 +243,20 @@ header {
     .col {
       width: calc(50% - (#{$space} / 2));
       float: left;
-      .no-csscalc & {
-        width: 49%;
-      }
     }
     .col-left {
       margin-right: $space;
-      .no-csscalc & {
-        margin-right: 1%;
-      }
     }
     .col-right {
       padding-left: 0;
+    }
+  }
+  .no-csscalc & {
+    .col {
+      width: 48.5%;
+    }
+    .col-left {
+      margin-right: 3%;
     }
   }
 }
@@ -923,12 +925,15 @@ hr.mast-divider {
   .col-right & {
     .header {
       font-size: 16px;
-      &, a {
+      &, 
+      a {
         color: red;
       }
     }
   }
-  .col-left &, .col-left & p, & p {
+  & p,
+  .col-left &,
+  .col-left & p {
     font-size: 1em;
     font-family: $letter-gothic-stack;
   }
@@ -952,10 +957,12 @@ hr.mast-divider {
       border-left: solid red 25px;
       margin-left: -25px;
     }
-    .header {
+    .col-left .header {
       font-size: 26px;
     }
-    .col-left &, .col-left & p, & p {
+    & p,
+    .col-left &,
+    .col-left & p {
       font-size: 1.1em;
     }
   }
