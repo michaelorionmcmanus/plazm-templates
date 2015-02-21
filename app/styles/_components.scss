@@ -855,9 +855,15 @@ form.search {
   }
 }
 
-.tx-pagebrowse-pi1, #tx-solr-results-meta {
-  p,li {
+.tx-pagebrowse-pi1,
+#tx-solr-results-meta {
+  p,
+  li {
     font-family: $letter-gothic-stack;
+  }
+  .more {
+    display: inline-block;
+    margin-top: 2.4em;
   }
 }
 
