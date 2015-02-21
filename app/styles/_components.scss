@@ -115,7 +115,7 @@ a {
 
 /** CONTAINER **/
 #container {
-  max-width: $containerWidth;
+  max-width: $contentWidth;
   padding: 10px;
   box-shadow: $navWidth 0 0 0 transparentize($brown, 0.1);
   transition: $duration transform ease;
@@ -129,6 +129,9 @@ a {
     .nav-open & {
       transform: translateX(0);
     }
+  }
+  @include respond($erie) {
+    max-width: $containerWidth;
   }
 }
 
@@ -188,7 +191,11 @@ header {
     width: 100%;
   }
   @include respond($ontario) {
+    
+  }
+  @include respond($erie) {
     @include clearfix;
+    margin-top: 15px;
     .col {
       float: left;
     }
@@ -199,17 +206,12 @@ header {
       width: 27.716%;
       box-sizing: border-box;
       padding-left: 20px;
-    }
-  }
-  @include respond($ontario) {
-    margin-top: 15px;
-    &.article-header {
-      margin-top: 0;
-    }
-    .col-right {
       .block {
         margin: 15px 0;
       }
+    }
+    &.article-header {
+      margin-top: 0;
     }
   }
 }
@@ -262,7 +264,7 @@ header {
   .tx-solr {
     float: right;
   }
-  @include respond($ontario) {
+  @include respond($erie) {
     padding-top: 0;
     border-top: none;
     margin-top: 0;
@@ -460,6 +462,7 @@ header {
 }
 
 nav.articles {
+  text-align: center;
   .control a {
     display: block;
     font-family: $letter-gothic-stack;
@@ -468,20 +471,22 @@ nav.articles {
     background-image: url(/images/issue-nav-sprite.png);
   }
   .close {
+    float: left;
+    display: block;
+    background:position;
     a {
       width: 50px;
       height: 60px;
     }
-    float:left;
-    display: block;
-    background:position;
   }
-  .left,.right {
+  .left,
+  .right {
+    display: inline-block;
+    vertical-align: top;
     a {
       width: 25px;
       height: 59px;
     }
-    float: left;
   }
   .left {
     a {
@@ -504,10 +509,20 @@ nav.articles {
       font-family: $letter-gothic-stack;
       font-size: 5em;
     }
-    .close {
-      float:left;
-    }
-    .left,.right {
+    // .close {
+    //   float: left;
+    // }
+    // .left,.right {
+    //   float: left;
+    // }
+  }
+  @include respond($erie) {
+    // .control a {
+    //   display: block;
+    // }
+    .left,
+    .right {
+      display: block;
       float: left;
     }
   }
@@ -799,43 +814,38 @@ a.more:hover {
 }
 
 form.search {
+  $height: 22px;
+  $buttonWidth: 80px;
   background: white;
+  position: relative;
+  input {
+    box-sizing: border-box;
+    display: inline-block;
+    &:focus {
+      outline: 0;
+    }
+  }
   input[type='text'] {
-    padding: 2px 0 2px 4px;
-    background: none;
-    border: none;
-    width: 115px;
+    width: 100%;
+    height: $height;
+    font-size: 14px;
     font-family: $letter-gothic-stack;
     text-transform: uppercase;
     color: $grayDark;
-    font-size: 14px;
-    #tx-solr-search & {
-      width: 100%;
-    }
+    background: none;
+    padding: 2px ($buttonWidth + 4px) 2px 4px;
+    border: none;
   }
   input[type='submit'] {
     border: none;
-    width: 77px;
-    height: 15px;
-    background-image: url(/images/search-submit.gif);
-    background-repeat: no-repeat;
-    background-color: #fff;
-    margin-left: 3px;
-    background-position: -1px -2px;
-  }
-  @include respond($ontario) {
-    input {
-      box-sizing: border-box;
-    }
-    input[type='text'] {
-      width: 60%;
-      padding-right: 3px;
-    }
-    input[type='submit'] {
-      width: 40%;
-      background-position: right -2px;
-      margin-left: 0;
-    }
+    width: $buttonWidth;
+    height: $height;
+    vertical-align: top;
+    background: #fff url(/images/search-submit.gif) no-repeat 0 25%;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
   }
 }
 
