@@ -333,6 +333,17 @@ header {
   }
 }
 
+.printSpread {
+  &:focus {
+    outline: 0;
+  }
+}
+
+.mfp-bg {
+  background-color: $brown;
+  opacity: 0.9;
+}
+
 #tx-solr-search-functions ul li	a,
 #tx-solr-search-functions ul li {
   text-transform: uppercase;
