@@ -14,7 +14,9 @@ require.config({
   }
 });
 
-require(['app', 'jquery', 'magnific'], function(app) {
+require(['app', 'fastclick', 'jquery', 'magnific'], function(app) {
+  FastClick.attach(document.body);
+
   var $ = jQuery;
 
   $('a.printSpread').click(function(e) {
@@ -36,10 +38,12 @@ require(['app', 'jquery', 'magnific'], function(app) {
 
   });
 
-  $('[data-behavior=open-nav]').click(function() {
+  $('.toggler-container').on('click', function() {
     $('body').addClass('nav-open');
+    e.stopImmediatePropagation();
   });
-  $('[data-behavior=close-nav]').click(function() {
+  $('[data-behavior=close-nav]').on('click', function(e) {
     $('body').removeClass('nav-open');
+    e.stopImmediatePropagation();
   });
 });

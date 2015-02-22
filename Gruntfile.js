@@ -382,6 +382,10 @@ module.exports = function (grunt) {
         },
         // Put files not handled in other tasks here
         copy: {
+            magnific: {
+                src: 'app/bower_components/magnific-popup/dist/magnific-popup.css',
+                dest: 'app/styles/_magnific.scss'
+            },
             dist: {
                 files: [{
                     expand: true,
@@ -428,6 +432,32 @@ module.exports = function (grunt) {
             all: {
                 rjsConfig: '<%= yeoman.app %>/scripts/main.js'
             }
+        },
+        'gh-pages': {
+            options: {
+                base: 'dist'
+            },
+            src: ['**']
+        },
+        processhtml: {
+            options: {
+                //
+            },
+            build: {
+                files: {
+                    'dist/index.html':['dist/index.html'],
+                    'dist/article.html':['dist/article.html'],
+                    'dist/issue.html':['dist/issue.html'],
+                    'dist/publication.html':['dist/publication.html'],
+                    'dist/search.html':['dist/search.html']
+                }
+            }
+        },
+        symlink: {
+            explicit: {
+                src: 'dist/images',
+                dest: 'dist/styles/images'
+            }
         }
     });
 
@@ -446,6 +476,7 @@ module.exports = function (grunt) {
             'concurrent:server',
             'connect:livereload',
             'open:server',
+            'copy:magnific',
             'watch'
         ]);
     });
@@ -463,11 +494,14 @@ module.exports = function (grunt) {
         'concurrent:dist',
         'requirejs',
         'cssmin',
-        'responsive_images:dev',
+        //'responsive_images:dev',
         'concat',
         'uglify',
+        'copy:magnific',
         'copy',
-        'rev',
+        'processhtml',
+        'symlink',
+        //'rev',
         'usemin'
     ]);
 

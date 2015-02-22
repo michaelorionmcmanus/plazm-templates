@@ -4,12 +4,9 @@
    Primary styles
    Author: Michael McManus
    ========================================================================== */
-
+@import "magnific";
 @import "variables";
 @import "components";
 @import "utilities";
-
-@import "../bower_components/magnific-popup/dist/magnific-popup.css";
-
 @import "results";
 @import "print";

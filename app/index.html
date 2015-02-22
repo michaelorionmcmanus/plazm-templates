@@ -13,6 +13,10 @@
   <script src="scripts/modernizr.js"></script>
   <!-- endbuild -->
 
+  <!-- build:[href]:build http://code.michaelmcman.us/plazm-templates/ -->
+    <base href="/" />
+  <!-- /build -->
+
   <script type="text/javascript" src="http://use.typekit.com/zfy2cht.js"></script>
   <script type="text/javascript">try {
     Typekit.load();
@@ -26,7 +30,9 @@
   <header>
     <nav id="primary">
       <a id="logo" href="/">PLAZM.ORG</a>
-      <button class="toggler" data-behavior="open-nav"></button>
+      <div class="toggler-container">
+        <button class="toggler" data-behavior="open-nav"></button>
+      </div>
       <ul>
         <li><a href="">Contents</a>
           <div class="dropdown">
