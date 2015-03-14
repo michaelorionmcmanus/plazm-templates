@@ -38,7 +38,7 @@ require(['app', 'fastclick', 'jquery', 'magnific'], function(app) {
 
   });
 
-  $('.toggler-container').on('click', function() {
+  $('.toggler-container').on('click', function(e) {
     $('body').addClass('nav-open');
     e.stopImmediatePropagation();
   });

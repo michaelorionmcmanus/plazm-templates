@@ -517,5 +517,10 @@ module.exports = function (grunt) {
         'connect:livereload',
         'autoshot'
     ]);
+
+    grunt.registerTask('deploy', [
+        'build',
+        'gh-pages'
+    ]);
     
 };
