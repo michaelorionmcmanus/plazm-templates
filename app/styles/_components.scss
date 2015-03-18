@@ -268,9 +268,11 @@ header {
   padding-top: 20px;
   border-top: 1px solid $grayDark;
   margin-top: 20px;
-  form,
-  .tx-solr {
-    float: right;
+  @include respond($balkhash) {
+    form,
+    .tx-solr {
+      float: right;
+    }
   }
   @include respond($erie) {
     padding-top: 0;
@@ -548,6 +550,7 @@ nav.articles {
 }
 
 ul.social {
+  margin-bottom: 10px;
   a {
     display: block;
     width: 23px;
@@ -557,12 +560,13 @@ ul.social {
     background: url(images/logo-twitter.gif) no-repeat;
   }
   .facebook a {
-
     background: url(images/logo-facebook.gif) no-repeat;
   }
   li {
-    margin-left: 5px;
     margin-right: 0;
+  }
+  li + li {
+    margin-left: 5px;
   }
 }
 
